@@ -7,25 +7,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cibertec.entity.Pago;
+import com.cibertec.entity.TipoProducto;
 import com.cibertec.util.MysqlConexion;
 
-public class PagoDAO {
+public class TipoProductoDAO {
 
-	public List<Pago> listaPago() {
-		ArrayList<Pago> data = new ArrayList<Pago>();
+	public List<TipoProducto> listaTipoProducto() {
+		ArrayList<TipoProducto> data = new ArrayList<TipoProducto>();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
 			con = MysqlConexion.obtenerConexion();
-			String sql = "select * from pago";
+			String sql = "select * from tipoProducto";
 			pstm = con.prepareStatement(sql);
 			rs = pstm.executeQuery();
-			Pago c = null;
+			TipoProducto c = null;
 			while (rs.next()) {
-				c = new Pago();
-				c.setIdPago(rs.getInt(1));
+				c = new TipoProducto();
+				c.setIdTipoProducto(rs.getInt(1));
 				c.setNombre(rs.getString(2));
 				data.add(c);
 			}
@@ -43,5 +43,4 @@ public class PagoDAO {
 		}
 		return data;
 	}
-	
 }

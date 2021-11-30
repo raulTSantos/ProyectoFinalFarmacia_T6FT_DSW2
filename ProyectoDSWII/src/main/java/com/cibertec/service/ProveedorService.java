@@ -17,7 +17,6 @@ import com.cibertec.entity.Proveedor;
 
 @Path("proveedores")
 public class ProveedorService {
-
 	private ProveedorDAO daoProveedor = new ProveedorDAO();
 
 	@GET
@@ -67,10 +66,9 @@ public class ProveedorService {
 		if (obj == null) {
 			return Response.status(Status.BAD_REQUEST).entity("User not found").build();
 		}else {
-			//daoProveedor.eliminaProveedor(id);
+			
 			return Response.ok(daoProveedor.eliminaProveedor(id)).entity("Se Elimino").build();
 		}
-		//return Response.ok().entity(obj).build();
 	}
 
 }

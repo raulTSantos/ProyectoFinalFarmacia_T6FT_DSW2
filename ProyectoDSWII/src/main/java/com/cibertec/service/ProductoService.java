@@ -1,13 +1,16 @@
 package com.cibertec.service;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import com.cibertec.dao.ProductoDAO;
 import com.cibertec.entity.Producto;
@@ -35,4 +38,39 @@ public class ProductoService {
 		}
 		return Response.ok(daoProducto.insertaProducto(obj)).build();
 	}
+	@PUT
+	@Path("/actualizar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response actualizarProducto(Producto obj) {
+		Producto salida = null;
+		int nro = 0;
+		salida = daoProducto.buscarProducto(obj.getIdProducto());
+		if (salida == null) {
+			return Response.status(400).entity("No se puede ubicar al proveedor").build();
+		} else {
+			nro = daoProducto.actualizaProducto(obj);
+			if (nro > 0) {
+				return Response.ok().entity("SE actualizo").build();
+			}
+			return Response.status(400).entity("Surgio un errror").build();
+		}
+
+	}
+
+	@DELETE
+	@Path("/eliminar/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteProducto(@PathParam("id") int id) {
+		Producto obj = null;
+		obj = daoProducto.buscarProducto(id);
+		if (obj == null) {
+			return Response.status(Status.BAD_REQUEST).entity("User not found").build();
+		}else {
+			//daoProveedor.eliminaProveedor(id);
+			return Response.ok(daoProducto.eliminaProducto(id)).entity("Se Elimino").build();
+		}
+		//return Response.ok().entity(obj).build();
+	}
+	
 }
